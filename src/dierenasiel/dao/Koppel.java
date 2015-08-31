@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package DOA;
+package dierenAsiel.dao;
 
 import java.util.List;
 
@@ -13,6 +13,7 @@ import java.util.List;
  */
 public class Koppel {
 
+    private static int count;
     private int koppelnummer;
     private Dier ouder1;
     private Dier ouder2;
@@ -43,8 +44,18 @@ public class Koppel {
     }
 
     public Koppel(Dier ouder1, Dier ouder2) {
+        count++;
+        koppelnummer = count;
         this.ouder1 = ouder1;
         this.ouder2 = ouder2;
+    }
+    
+    @Override
+    public String toString(){
+        
+        String koppelString = ouder1.getNaam() + " is gekoppeld met " + ouder2.getNaam();
+        
+        return koppelString;
     }
 
 }

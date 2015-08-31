@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package DOA;
+package dierenAsiel.dao;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,16 +26,17 @@ public class Administratie {
         return koppels;
     }
 
-    public void registrerenDier(String naam, String geboorteplaats, String geslacht) {
-        Date date = new Date();
-        Dier dier = new Dier(naam, date, geboorteplaats, geslacht);
+    public void registrerenDier(String naam, Date geboortedatum, String geboorteplaats, String geslacht) {
+        Dier dier = new Dier(naam, geboortedatum, geboorteplaats, geslacht);
         dieren.add(dier);
-        String dierString = dier.getChipregistratienummer() + " , " + naam + " , " + geboorteplaats + " , " + geslacht;
-        System.out.println("Dier geregistreerd als: " + dierString);
+        System.out.println(dier.toString());
     }
 
-    public void registrerenKoppel(Koppel koppel) {
+    public void registrerenKoppel(Dier ouder1, Dier ouder2) {
+        Koppel koppel = new Koppel(ouder1, ouder2);
+        koppels.add(koppel);
+        System.out.println(koppel.toString());
+    }   
 
-    }
 
 }

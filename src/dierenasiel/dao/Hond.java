@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package DOA;
+package dierenAsiel.dao;
 
 import java.util.Date;
 
@@ -16,5 +16,7 @@ public class Hond extends Dier{
     public Hond(String naam, Date geboortedatum, String geboorteplaats, String geslacht) {
         super(naam, geboortedatum, geboorteplaats, geslacht);
     }
+    
+    
     
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package DOA;
+package dierenAsiel.dao;
 
 import java.util.Date;
 
@@ -12,8 +12,9 @@ import java.util.Date;
  * @author Gebruiker
  */
 public class Dier {
-    
-    private int chipregistratienummer = 0;
+
+    private static int count = 0;
+    private final int chipregistratienummer;
     private String naam;
     private Date geboortedatum;
     private String geboorteplaats;
@@ -56,14 +57,26 @@ public class Dier {
     }
 
     public Dier(String naam, Date geboortedatum, String geboorteplaats, String geslacht) {
-        this.chipregistratienummer++;
+        count++;
+        chipregistratienummer = count;
         this.naam = naam;
         this.geboortedatum = geboortedatum;
         this.geboorteplaats = geboorteplaats;
         this.geslacht = geslacht;
     }
-    
-    
-    
-    
+
+    @Override
+    public String toString() {
+
+        String dierString = "\nDier geregistreerd als: " + "\n"
+                + "chipNR: " + chipregistratienummer + "\n"
+                + "Naam: " + naam + "\n"
+                + "Geboortedatum: " + geboortedatum.toString() + "\n"
+                + "Geboorteplaats: " + geboorteplaats + "\n"
+                + "Geslacht: " + geslacht;
+
+        return dierString;
+
+    }
+
 }
