@@ -5,11 +5,9 @@
  */
 package DOA;
 
-import java.io.Console;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.ConsoleHandler;
 
 /**
  *
@@ -33,7 +31,7 @@ public class Administratie {
         Dier dier = new Dier(naam, date, geboorteplaats, geslacht);
         dieren.add(dier);
         String dierString = dier.getChipregistratienummer() + " , " + naam + " , " + geboorteplaats + " , " + geslacht;
-        System.out.print("Dier geregistreerd als: " + dierString);
+        System.out.println("Dier geregistreerd als: " + dierString);
     }
 
     public void registrerenKoppel(Koppel koppel) {

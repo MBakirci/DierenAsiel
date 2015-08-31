@@ -22,21 +22,32 @@ public class DierenAsiel {
      */
     public static void main(String[] args) throws IOException {
 
+        // TODO code application logic here
+        DierenAsiel dierenAsiel = new DierenAsiel();
         Administratie administratie = new Administratie();
+        dierenAsiel.Register(administratie);
+    }
+
+    public void Register(Administratie administratie) throws IOException {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        System.out.print("Naam: ");
-        String naam = br.readLine();
 
-        System.out.print("Geboorteplaats: ");
-        String geboorteplaats = br.readLine();
+        System.out.println("Typ R in voor Registreren dier of K voor Koppel");
 
-        System.out.print("Geslacht: ");
-        String geslacht = br.readLine();
+        if (br.readLine().equals("R")) {
 
-        administratie.registrerenDier(naam, geboorteplaats, geslacht);
+            System.out.print("Naam: ");
+            String naam = br.readLine();
 
-        // TODO code application logic here
+            System.out.print("Geboorteplaats: ");
+            String geboorteplaats = br.readLine();
+
+            System.out.print("Geslacht: ");
+            String geslacht = br.readLine();
+
+            administratie.registrerenDier(naam, geboorteplaats, geslacht);
+        }
+        Register(administratie);
     }
 
 }
