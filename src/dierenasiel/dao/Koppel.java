@@ -53,7 +53,7 @@ public class Koppel {
     @Override
     public String toString(){
         
-        String koppelString = ouder1.getNaam() + " is gekoppeld met " + ouder2.getNaam();
+        String koppelString = ouder1.getClass().getSimpleName() + " Familie bestaande uit " + ouder1.getNaam() + " en " + ouder2.getNaam();
         
         return koppelString;
     }

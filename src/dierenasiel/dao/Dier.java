@@ -11,14 +11,14 @@ import java.util.Date;
  *
  * @author Gebruiker
  */
-public class Dier {
+public abstract class Dier {
 
     private static int count = 0;
-    private final int chipregistratienummer;
-    private String naam;
-    private Date geboortedatum;
-    private String geboorteplaats;
-    private String geslacht;
+    protected final int chipregistratienummer;
+    protected String naam;
+    protected Date geboortedatum;
+    protected String geboorteplaats;
+    private Geslacht geslacht;
 
     public int getChipregistratienummer() {
         return chipregistratienummer;
@@ -48,15 +48,15 @@ public class Dier {
         this.geboorteplaats = geboorteplaats;
     }
 
-    public String getGeslacht() {
+    public Geslacht getGeslacht() {
         return geslacht;
     }
 
-    public void setGeslacht(String geslacht) {
+    public void setGeslacht(Geslacht geslacht) {
         this.geslacht = geslacht;
     }
 
-    public Dier(String naam, Date geboortedatum, String geboorteplaats, String geslacht) {
+    public Dier(String naam, Date geboortedatum, String geboorteplaats, Geslacht geslacht) {
         count++;
         chipregistratienummer = count;
         this.naam = naam;

@@ -6,7 +6,6 @@
 package dierenAsiel.dao;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -26,17 +25,27 @@ public class Administratie {
         return koppels;
     }
 
-    public void registrerenDier(String naam, Date geboortedatum, String geboorteplaats, String geslacht) {
-        Dier dier = new Dier(naam, geboortedatum, geboorteplaats, geslacht);
+    public String AddDier(Dier dier) {
+
         dieren.add(dier);
-        System.out.println(dier.toString());
+        return dier.toString();
+
     }
 
-    public void registrerenKoppel(Dier ouder1, Dier ouder2) {
-        Koppel koppel = new Koppel(ouder1, ouder2);
-        koppels.add(koppel);
-        System.out.println(koppel.toString());
-    }   
+    public String AddKoppel(Dier ouder1, Dier ouder2) {
 
+        if (ouder1.getClass() == ouder2.getClass()) {
+            Koppel koppel = new Koppel(ouder1, ouder2);
+            koppels.add(koppel);
+            return koppel.toString();
+        } else {
+            return "Een kat kan geen koppel worden met een hond en vice versa";
+        }
+
+    }
+
+    public void AddKind(Dier kind, Koppel koppel) {
+        koppel.getKinderen().add(kind);
+    }
 
 }

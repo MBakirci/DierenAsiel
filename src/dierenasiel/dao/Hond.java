@@ -13,8 +13,15 @@ import java.util.Date;
  */
 public class Hond extends Dier{
 
-    public Hond(String naam, Date geboortedatum, String geboorteplaats, String geslacht) {
+    public Hond(String naam, Date geboortedatum, String geboorteplaats, Geslacht geslacht) {
         super(naam, geboortedatum, geboorteplaats, geslacht);
+    }
+    
+    @Override
+    public String toString(){
+        
+        return super.toString() + "\nSoort: Hond";
+        
     }
     
     

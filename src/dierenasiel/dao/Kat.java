@@ -11,10 +11,17 @@ import java.util.Date;
  *
  * @author Gebruiker
  */
-public class Kat extends Dier{
+public class Kat extends Dier {
 
-    public Kat(String naam, Date geboortedatum, String geboorteplaats, String geslacht) {
+    public Kat(String naam, Date geboortedatum, String geboorteplaats, Geslacht geslacht) {
         super(naam, geboortedatum, geboorteplaats, geslacht);
-    }   
-    
+    }
+
+    @Override
+    public String toString() {
+
+        return super.toString() + "\nSoort: Kat";
+
+    }
+
 }
