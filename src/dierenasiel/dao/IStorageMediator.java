@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package dierenasiel.dao;
+import dierenAsiel.dao.Administratie;
 
 /**
  *
@@ -11,7 +12,8 @@ package dierenasiel.dao;
  */
 public interface IStorageMediator {
 
-    Administratie load() throws IStorageException;
+    public Administratie load() throws IStorageException;
 
-    void bewaar(Administratie administratie) throws IStorageException;
+    public void bewaar(Administratie administratie) throws IStorageException;
+    
 }

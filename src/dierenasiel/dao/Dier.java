@@ -5,13 +5,14 @@
  */
 package dierenAsiel.dao;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  *
  * @author Gebruiker
  */
-public abstract class Dier {
+public abstract class Dier implements Serializable{
 
     private static int count = 0;
     protected final int chipregistratienummer;

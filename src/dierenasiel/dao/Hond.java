@@ -5,13 +5,14 @@
  */
 package dierenAsiel.dao;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  *
  * @author Gebruiker
  */
-public class Hond extends Dier{
+public class Hond extends Dier implements Serializable{
 
     public Hond(String naam, Date geboortedatum, String geboorteplaats, Geslacht geslacht) {
         super(naam, geboortedatum, geboorteplaats, geslacht);

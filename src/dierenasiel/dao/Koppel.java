@@ -5,13 +5,14 @@
  */
 package dierenAsiel.dao;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  *
  * @author Gebruiker
  */
-public class Koppel {
+public class Koppel implements Serializable {
 
     private static int count;
     private int koppelnummer;

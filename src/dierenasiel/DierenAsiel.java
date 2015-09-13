@@ -35,7 +35,7 @@ public class DierenAsiel {
 
     private final DateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.GERMAN);
 
-    private final Administratie administratie = new Administratie();
+    private Administratie administratie = new Administratie();
 
     ;
 
@@ -45,7 +45,7 @@ public class DierenAsiel {
         DierenAsiel dierenAsiel = new DierenAsiel();
 
         //Een aantal dieren er in zetten en koppelen.
-        dierenAsiel.SampleDier();
+        //dierenAsiel.SampleDier(); Hoeft niet meer na Serializatie 
 
         //Actie methode voor Registreren, Koppelen, Koppelgegevens opvragen en Zoeken naar Dieren.
         dierenAsiel.action();
@@ -70,7 +70,8 @@ public class DierenAsiel {
     }
 
     public void action() throws IOException, ParseException {
-        System.out.println("\nTyp R in voor Registreren, K voor Koppellen van paren, C voor kinderen toevoegen, G voor koppelgegevens, Z voor zoeken ");
+        System.out.println("\nTyp R in voor Registreren, K voor Koppellen van paren, C voor kinderen toevoegen, G voor koppelgegevens, Z voor zoeken\n"
+                + "B voor Opslaan en L voor Laden ");
         String input = scanner.nextLine();
 
         if (input.equalsIgnoreCase("R")) {
@@ -93,6 +94,14 @@ public class DierenAsiel {
 
             Zoek();
 
+        } else if(input.equalsIgnoreCase("B")){
+            
+            Bewaar();
+            
+        } else if(input.equalsIgnoreCase("L")){
+            
+            Load();
+            
         }
         action();
     }
@@ -196,6 +205,19 @@ public class DierenAsiel {
             System.out.println("Niks gevonden! ");
         }
 
+    }
+    
+    private void Bewaar(){
+        
+        administratie.bewaar(administratie);
+        System.out.println("Opgeslagen");
+        
+    }
+
+    private void Load() {
+        
+        administratie = administratie.load();
+        
     }
 
 }
