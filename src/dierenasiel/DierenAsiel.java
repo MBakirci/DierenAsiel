@@ -73,23 +73,23 @@ public class DierenAsiel {
         System.out.println("\nTyp R in voor Registreren, K voor Koppellen van paren, C voor kinderen toevoegen, G voor koppelgegevens, Z voor zoeken ");
         String input = scanner.nextLine();
 
-        if (input.equals("R")) {
+        if (input.equalsIgnoreCase("R")) {
 
             Register();
 
-        } else if (input.equals("K")) {
+        } else if (input.equalsIgnoreCase("K")) {
 
             Koppel();
 
-        } else if (input.equals("C")) {
+        } else if (input.equalsIgnoreCase("C")) {
 
             KoppelKind();
 
-        } else if (input.equals("G")) {
+        } else if (input.equalsIgnoreCase("G")) {
 
             KoppelGegevens();
 
-        } else if (input.equals("Z")) {
+        } else if (input.equalsIgnoreCase("Z")) {
 
             Zoek();
 
