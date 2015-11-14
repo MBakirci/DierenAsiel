@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dierenAsiel.dao;
+package dierenasiel.model;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -19,11 +19,22 @@ import java.util.List;
  * @author Gebruiker
  */
 @SuppressWarnings("serial")
-public class Administratie implements dierenasiel.dao.IStorageMediator, Serializable {
+public class Administratie implements dierenasiel.model.IStorageMediator, Serializable {
 
-    private final List<Dier> dieren = new ArrayList<>();
-    private final List<Koppel> koppels = new ArrayList<>();
+    private int nextKoppelNr;
+    private int nextDierNr;
+    private final List<Dier> dieren;
+    private final List<Koppel> koppels;
     private final String filename = "temp.bin";
+
+    public Administratie() {
+        dieren = new ArrayList<>();
+        koppels = new ArrayList<>();
+        nextKoppelNr = 1;
+        nextDierNr = 1;        
+    }
+    
+    
 
     public List<Dier> getDieren() {
         return dieren;
@@ -34,7 +45,8 @@ public class Administratie implements dierenasiel.dao.IStorageMediator, Serializ
     }
 
     public String AddDier(Dier dier) {
-
+        dier.chipregistratienummer = nextDierNr;
+        nextDierNr++;
         dieren.add(dier);
         return dier.toString();
 
@@ -43,7 +55,8 @@ public class Administratie implements dierenasiel.dao.IStorageMediator, Serializ
     public String AddKoppel(Dier ouder1, Dier ouder2) {
 
         if (ouder1.getClass() == ouder2.getClass()) {
-            Koppel koppel = new Koppel(ouder1, ouder2);
+            Koppel koppel = new Koppel(nextKoppelNr,ouder1, ouder2);
+            nextKoppelNr++;
             koppels.add(koppel);
             return koppel.toString();
         } else {
@@ -53,9 +66,12 @@ public class Administratie implements dierenasiel.dao.IStorageMediator, Serializ
     }
 
     public void AddKind(Dier kind, Koppel koppel) {
-        koppel.getKinderen().add(kind);
+        if (koppel.getOuder1().geboortedatum.after(kind.geboortedatum)
+                && koppel.getOuder2().geboortedatum.after(kind.geboortedatum)) {
+            koppel.getKinderen().add(kind);
+        }
     }
-
+    
     @Override
     public Administratie load() {
         FileInputStream fis;

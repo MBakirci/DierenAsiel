@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dierenAsiel.dao;
+package dierenasiel.model;
 
 import java.io.Serializable;
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class Koppel implements Serializable {
 
-    private static int count;
+    private static final long serialVersionUID = 1L;
     private int koppelnummer;
     private Dier ouder1;
     private Dier ouder2;
@@ -44,9 +44,8 @@ public class Koppel implements Serializable {
         return kinderen;
     }
 
-    public Koppel(Dier ouder1, Dier ouder2) {
-        count++;
-        koppelnummer = count;
+    public Koppel(int nummer, Dier ouder1, Dier ouder2) {
+        this.koppelnummer = nummer;
         this.ouder1 = ouder1;
         this.ouder2 = ouder2;
     }

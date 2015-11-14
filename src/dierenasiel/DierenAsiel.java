@@ -5,12 +5,12 @@
  */
 package dierenasiel;
 
-import dierenAsiel.dao.Administratie;
-import dierenAsiel.dao.Dier;
-import dierenAsiel.dao.Geslacht;
-import dierenAsiel.dao.Hond;
-import dierenAsiel.dao.Kat;
-import dierenAsiel.dao.Koppel;
+import dierenasiel.model.Administratie;
+import dierenasiel.model.Dier;
+import dierenasiel.model.Geslacht;
+import dierenasiel.model.Hond;
+import dierenasiel.model.Kat;
+import dierenasiel.model.Koppel;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -37,7 +37,7 @@ public class DierenAsiel {
 
     private Administratie administratie = new Administratie();
 
-    ;
+    private String soort = null;
 
     public static void main(String[] args) throws IOException, ParseException {
 
@@ -45,8 +45,7 @@ public class DierenAsiel {
         DierenAsiel dierenAsiel = new DierenAsiel();
 
         //Een aantal dieren er in zetten en koppelen.
-        //dierenAsiel.SampleDier(); Hoeft niet meer na Serializatie 
-
+        //dierenAsiel.SampleDier(); //Hoeft niet meer na Serializatie 
         //Actie methode voor Registreren, Koppelen, Koppelgegevens opvragen en Zoeken naar Dieren.
         dierenAsiel.action();
 
@@ -54,10 +53,10 @@ public class DierenAsiel {
 
     private void SampleDier() throws ParseException {
 
-        administratie.AddDier(new Hond("Cris", format.parse("30-01-1999"), "Breda", Geslacht.Vrouw));
-        administratie.AddDier(new Kat("Lau", format.parse("26-02-2000"), "Breda", Geslacht.Vrouw));
-        administratie.AddDier(new Hond("Miauw", format.parse("31-03-2001"), "Breda", Geslacht.Man));
-        administratie.AddDier(new Kat("WAF", format.parse("03-04-2002"), "Breda", Geslacht.Man));
+        administratie.AddDier(new Hond(0, "Cris", format.parse("30-01-1999"), "Breda", Geslacht.Vrouw, null));
+        administratie.AddDier(new Kat(0, "Lau", format.parse("26-02-2000"), "Breda", Geslacht.Vrouw, null));
+        administratie.AddDier(new Hond(0, "Miauw", format.parse("31-03-2001"), "Breda", Geslacht.Man, null));
+        administratie.AddDier(new Kat(0, "WAF", format.parse("03-04-2002"), "Breda", Geslacht.Man, null));
 
         Dier DierlijkOuder1 = administratie.getDieren().get(0);
         Dier DierlijkOuder2 = administratie.getDieren().get(1);
@@ -71,7 +70,7 @@ public class DierenAsiel {
 
     public void action() throws IOException, ParseException {
         System.out.println("\nTyp R in voor Registreren, K voor Koppellen van paren, C voor kinderen toevoegen, G voor koppelgegevens, Z voor zoeken\n"
-                + "B voor Opslaan en L voor Laden ");
+                + "S voor Stamboomgegevens, B voor Opslaan en L voor Laden\nX voor afsluiten");
         String input = scanner.nextLine();
 
         if (input.equalsIgnoreCase("R")) {
@@ -94,14 +93,18 @@ public class DierenAsiel {
 
             Zoek();
 
-        } else if(input.equalsIgnoreCase("B")){
-            
+        } else if (input.equalsIgnoreCase("B")) {
+
             Bewaar();
-            
-        } else if(input.equalsIgnoreCase("L")){
-            
+
+        } else if (input.equalsIgnoreCase("L")) {
+
             Load();
-            
+
+        } else if (input.equalsIgnoreCase("S")) {
+            Stamboom();
+        } else if (input.equalsIgnoreCase("X")) {
+            System.exit(0);
         }
         action();
     }
@@ -110,26 +113,55 @@ public class DierenAsiel {
 
         System.out.print("Naam: ");
         String naam = br.readLine();
+        if(naam.equals("")){
+            return;
+        }
 
-        System.out.print("Geboortedatum: ");
+        System.out.print("Geboortedatum: [enter voor vandaag]");
         String geboortedatum = br.readLine();
-        Date date = format.parse(geboortedatum);
+        Date date = new Date();
+        try {
+            date = format.parse(geboortedatum);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
         System.out.print("Geboorteplaats: ");
         String geboorteplaats = br.readLine();
 
-        System.out.print("Geslacht: ");
+        System.out.print("Geslacht: [Man of Vrouw]");
         String geslacht = br.readLine();
+        if (geslacht.equals("")) {
+            geslacht = "Man";
+        }
         Geslacht geslacht1 = Geslacht.valueOf(geslacht);
 
-        System.out.print("Soort: ");
-        String soort = br.readLine();
-
-        if (soort.equalsIgnoreCase("Hond")) {
-            System.out.println(administratie.AddDier(new Hond(naam, date, geboorteplaats, geslacht1)));
-        } else {
-            System.out.println(administratie.AddDier(new Kat(naam, date, geboorteplaats, geslacht1)));
+        if (soort == null) {
+            System.out.print("Soort: [Hond of Kat]");
+            soort = br.readLine();
         }
+
+        System.out.print("Ouders:  (0 voor verder gaan zonder ouders)\n");
+        KoppelGegevens();
+        System.out.println("typ Koppelnummer in: ");
+        String ouders = br.readLine();
+        if (!ouders.equals("0") && !ouders.equals("")) {
+            Koppel k = administratie.getKoppels().get(Integer.parseInt(ouders) - 1);
+
+            if (soort.equalsIgnoreCase("Hond")) {
+                System.out.println(administratie.AddDier(new Hond(0, naam, date, geboorteplaats, geslacht1, k)));
+            } else {
+                System.out.println(administratie.AddDier(new Kat(0, naam, date, geboorteplaats, geslacht1, k)));
+            }
+        } else {
+            if (soort.equalsIgnoreCase("Hond")) {
+                System.out.println(administratie.AddDier(new Hond(0, naam, date, geboorteplaats, geslacht1, null)));
+            } else {
+                System.out.println(administratie.AddDier(new Kat(0, naam, date, geboorteplaats, geslacht1, null)));
+            }
+        }
+
+        soort = null;
 
     }
 
@@ -137,33 +169,44 @@ public class DierenAsiel {
 
         DierGegevens();
 
-        System.out.println("typ chipnummer in Ouder1: ");
-        String ouder1 = br.readLine();
-        Dier DierlijkOuder1 = administratie.getDieren().get(Integer.parseInt(ouder1) - 1);
+        try {
+            System.out.println("typ chipnummer in Ouder1: ");
+            String ouder1 = br.readLine();
+            Dier DierlijkOuder1 = administratie.getDieren().get(Integer.parseInt(ouder1) - 1);
 
-        System.out.println("typ chipnummer in Ouder2: ");
-        String ouder2 = br.readLine();
-        Dier DierlijkOuder2 = administratie.getDieren().get(Integer.parseInt(ouder2) - 1);
+            System.out.println("typ chipnummer in Ouder2: ");
+            String ouder2 = br.readLine();
+            Dier DierlijkOuder2 = administratie.getDieren().get(Integer.parseInt(ouder2) - 1);
 
-        administratie.AddKoppel(DierlijkOuder1, DierlijkOuder2);
+            administratie.AddKoppel(DierlijkOuder1, DierlijkOuder2);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
     }
 
-    private void KoppelKind() throws IOException {
+    private void KoppelKind() throws IOException, ParseException {
 
         KoppelGegevens();
 
         System.out.println("typ Koppelnummer in: ");
         String ouders = br.readLine();
-        Koppel koppel = administratie.getKoppels().get(Integer.parseInt(ouders )- 1);
+        Koppel koppel = administratie.getKoppels().get(Integer.parseInt(ouders) - 1);
 
         DierGegevens();
-        
-        System.out.println("typ chipnummer in kind: ");
-        String ouder1 = br.readLine();
-        Dier kind = administratie.getDieren().get(Integer.parseInt(ouder1) - 1);
-        
-        administratie.AddKind(kind, koppel);
+
+        soort = koppel.getClass().getSimpleName();
+        System.out.println("typ chipnummer in kind:     (0) voor niew dier ");
+        if (!br.readLine().equals("0")) {
+            String ouder1 = br.readLine();
+            Dier kind = administratie.getDieren().get(Integer.parseInt(ouder1) - 1);
+
+            administratie.AddKind(kind, koppel);
+        } else {
+
+            Register();
+
+        }
 
     }
 
@@ -206,18 +249,29 @@ public class DierenAsiel {
         }
 
     }
-    
-    private void Bewaar(){
-        
+
+    private void Bewaar() {
+
         administratie.bewaar(administratie);
         System.out.println("Opgeslagen");
-        
+
     }
 
     private void Load() {
-        
+
         administratie = administratie.load();
-        
+
+    }
+
+    private void Stamboom() throws IOException {
+
+        DierGegevens();
+        System.out.println("Voer dier nummer in:");
+
+        String dier = br.readLine();
+        Dier d = administratie.getDieren().get(Integer.parseInt(dier) - 1);
+        System.out.println(d.stamboomAlsString());
+
     }
 
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dierenAsiel.dao;
+package dierenasiel.model;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -13,9 +13,10 @@ import java.util.Date;
  * @author Gebruiker
  */
 public class Hond extends Dier implements Serializable{
+    private static final long serialVersionUID = 1L;
 
-    public Hond(String naam, Date geboortedatum, String geboorteplaats, Geslacht geslacht) {
-        super(naam, geboortedatum, geboorteplaats, geslacht);
+    public Hond(int nummer,String naam, Date geboortedatum, String geboorteplaats, Geslacht geslacht, Koppel ouders) {
+        super(nummer,naam, geboortedatum, geboorteplaats, geslacht, ouders);
     }
     
     @Override
